@@ -33,7 +33,7 @@ jobs:
         dotnet-version: 8.x
         source-url: https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json
       env:
-        NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NUGET_AUTH_TOKEN: ${{ github.token }}
 
     - name: GitVersion
       id: git-version
