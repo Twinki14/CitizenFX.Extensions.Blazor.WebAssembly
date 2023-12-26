@@ -63,4 +63,4 @@ jobs:
 
     - name: Publish - GitHub
       if: ${{ env.is-default-branch == 'true' || env.is-tag == 'true' }}
-      run: dotnet nuget push **/*.nupkg --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate --source "github"
+      run: dotnet nuget push **/*.nupkg --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate
