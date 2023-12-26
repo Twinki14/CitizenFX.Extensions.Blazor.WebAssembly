@@ -6,13 +6,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref_name }}
   cancel-in-progress: true
 
-# on push anything, run the ci build without publishing
-# on a tag push, publish as release
-# on a main push, publish as a rerelease
-# 0.2.6 - tag pushes
-# 0.2.6-ci-6 - any push to main
-
-# cleanup all ci-packages on new version tags
+env:
+  is-default-branch: ${{ github.ref_name == github.event.repository.default_branch }}
+  is-tag: ${{ startsWith(github.ref, 'refs/tags/') }}
 
 jobs:
   build:
@@ -41,14 +37,26 @@ jobs:
       with:
         useConfigFile: true
 
-    - name: Build
-      run: dotnet build --configuration Release
-      working-directory: ./src
+    - name: Dotnet - Restore
+      run: dotnet restore
+      working-directory: src
 
-    - name: Test
-      run: dotnet test
-      working-directory: ./src
+    - name: Dotnet - Build
+      run: dotnet build -c Release --no-restore
+      working-directory: src
 
-    - name: Pack
-      run: dotnet pack --configuration Release
-      working-directory: ./src
+    - name: Dotnet - Test
+      run: dotnet test -c Release --no-restore
+      working-directory: src
+
+    - name: Dotnet - Pack
+      run: dotnet pack -c Release --no-restore
+      working-directory: src
+
+    - name: Publish - NuGet
+      if: ${{ env.is-default-branch == 'true' || env.is-tag == 'true' }}
+      run: echo "NuGet"
+
+    - name: Publish - GitHub
+      if: ${{ env.is-default-branch == 'true' || env.is-tag == 'true' }}
+      run: echo "GitHub"
