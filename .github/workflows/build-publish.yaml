@@ -45,6 +45,10 @@ jobs:
       run: dotnet build --configuration Release
       working-directory: ./src
 
+    - name: Test
+      run: dotnet test
+      working-directory: ./src
+
     - name: Pack
       run: dotnet pack --configuration Release
       working-directory: ./src
