@@ -1,0 +1,50 @@
+name: Build - Publish
+on:
+  push:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref_name }}
+  cancel-in-progress: true
+
+# on push anything, run the ci build without publishing
+# on a tag push, publish as release
+# on a main push, publish as a rerelease
+# 0.2.6 - tag pushes
+# 0.2.6-ci-6 - any push to main
+
+# cleanup all ci-packages on new version tags
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Setup GitVersion
+      uses: gittools/actions/gitversion/setup@v0
+      with:
+        versionSpec: '5.x'
+        preferLatestVersion: true
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.x
+
+    - name: GitVersion
+      id: git-version
+      uses: gittools/actions/gitversion/execute@v0
+      with:
+        useConfigFile: true
+
+    - name: Build
+      run: dotnet build --configuration Release
+      working-directory: ./src
+
+    - name: Pack
+      run: dotnet pack --configuration Release
+      working-directory: ./src
