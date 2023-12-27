@@ -20,7 +20,7 @@ An unofficial set of extensions for developing Nui interfaces with Blazor WASM i
   - Add `builder.RootComponents.Add<NuiMessageListener>("#nui-message-listener");` in your `Program.cs`
   - This adds some Javascript to your `<body>` that directs any Nui Messages for the resource to `NuiMessageListener`
   - Add `@inherits NuiComponent` in your component
-  - Add `[NuiMessageHandler("<type-name>")] to any static or instanced method in your component
+  - Add `[NuiMessageHandler("<type-name>")]` to any static or instanced method in your component
 - For triggering Nui Callbacks, [NuiCallbackService](src/CitizenFX.Extensions.Blazor.WebAssembly/Services/NuiCallbackService.cs) must be added to your service collection
   - Add `builder.Services.AddNuiServices();` in your `Program.cs`
   - Inject in your page with `@inject INuiCallbackService NuiCallbackService`
