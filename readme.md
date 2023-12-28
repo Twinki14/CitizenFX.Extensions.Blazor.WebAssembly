@@ -11,9 +11,13 @@ An unofficial set of extensions for developing Nui interfaces with Blazor WASM i
 ## Features
 - Attribute-based Nui Message handling
   - `[NuiMessageHandler("showui:true")]`
+
+
 - Service-based Nui Callback triggering
   - `@inject INuiCallbackService`
   - `await NuiCallbackService.TriggerNuiCallbackAsync("getItemInfo", new { item = "phone" });`
+
+
 - `System.Text.Json` for JSON Serialization & Deserialization
 
 ## Getting started
