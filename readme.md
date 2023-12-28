@@ -5,6 +5,7 @@ An unofficial set of extensions for developing Nui interfaces with Blazor WASM i
 [![Downloads](https://img.shields.io/nuget/dt/CitizenFX.Extensions.Blazor.WebAssembly?style=flat-square)](https://www.nuget.org/packages/CitizenFX.Extensions.Blazor.WebAssembly)
 [![GitHub release](https://img.shields.io/github/v/release/Twinki14/CitizenFX.Extensions.Blazor.WebAssembly?style=flat-square)](https://github.com/Twinki14/CitizenFX.Extensions.Blazor.WebAssembly/releases)
 [![Nuget](https://img.shields.io/nuget/v/CitizenFX.Extensions.Blazor.WebAssembly?style=flat-square)](https://www.nuget.org/packages/CitizenFX.Extensions.Blazor.WebAssembly)
+[![cfx.re](https://img.shields.io/badge/cfx.re-link-orange)](https://forum.cfx.re/t/c-cfx-extensions-blazor-webassembly/5196202)
 [![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/Twinki14/CitizenFX.Extensions.Blazor.WebAssembly/build-publish.yaml?style=flat-square)](https://github.com/Twinki14/CitizenFX.Extensions.Blazor.WebAssembly/actions/workflows/build-publish.yaml)
 
 ## Features
@@ -13,26 +14,33 @@ An unofficial set of extensions for developing Nui interfaces with Blazor WASM i
 - Service-based Nui Callback triggering
   - `@inject INuiCallbackService`
   - `await NuiCallbackService.TriggerNuiCallbackAsync("getItemInfo", new { item = "phone" });`
+- `System.Text.Json` for JSON Serialization & Deserialization
 
 ## Getting started
 - For Nui Message handling, the [NuiMessageListener](src/CitizenFX.Extensions.Blazor.WebAssembly/NuiMessageListener.cs) must be injected as a root-component in index.html, and your component(s) must inherit [NuiComponent](src/CitizenFX.Extensions.Blazor.WebAssembly/NuiComponent.cs)
   - Add `<template id="nui-message-listener"></template>` to your `index.html` in the `<body>`
   - Add `builder.RootComponents.Add<NuiMessageListener>("#nui-message-listener");` in your `Program.cs`
   - This adds some Javascript to your `<body>` that directs any Nui Messages for the resource to `NuiMessageListener`
-  - Add `@inherits NuiComponent` in your component
-  - Add `[NuiMessageHandler("<type-name>")]` to any static or instanced method in your component
+  - Add `@inherits NuiComponent` in your component/razor page
+  - Add `[NuiMessageHandler("<identifier>")]` to any static or instanced method in your component
 - For triggering Nui Callbacks, [NuiCallbackService](src/CitizenFX.Extensions.Blazor.WebAssembly/Services/NuiCallbackService.cs) must be added to your service collection
   - Add `builder.Services.AddNuiServices();` in your `Program.cs`
   - Inject in your page with `@inject INuiCallbackService NuiCallbackService`
 
 ## Notes
 - `NuiMessageListener` & `NuiMessageHandler` requires/uses a specific string field in the sending-message to determine which method to invoke
-  - Currently that field is `type`, but this may change in the future to be configurable
-  - When `NuiMessageListener` recieves an Nui message, `NuiMessageListener` will look for all `NuiMessageHandler` attributed methods constructed with the matching `type` name found in the recieved Nui message, and then attempt to deserialize any json fields specified in the `NuiMessageHandler` attributed method paramters
-- Currently, you may only have one `NuiMessageListener` per type-string
-- `NuiMessageListener` and `NuiCallbackService` uses System.Text.Json to serialize & deserialize json in the library
-  - You can configure the JsonSerializerOptions the message handler and the callback service uses in `AddNuiServices();`
-  - `builder.Services.AddNuiServices(options => { options.ConfigureForNodaTime(DateTimeZoneProviders.Tzdb); });`
+  - The field can be configured in `builder.Services.AddNuiServices();`
+  - When `NuiMessageListener` receives an Nui message, `NuiMessageListener` will look for all `NuiMessageHandler` attributed methods constructed with the matching `identifier` name found in the received Nui message, and then attempt to deserialize any json fields specified in the `NuiMessageHandler` attributed method paramters
+- Currently, you may only have one `NuiMessageListener` per identifier-string
+- Configure the internal `JsonSerializerOptions` and the identifier-string in `builder.Services.AddNuiServices();`
+```csharp
+builder.Services.AddNuiServices(options =>
+{
+    options.JsonSerializerOptions.ConfigureForNodaTime(DateTimeZoneProviders.Tzdb);
+    options.MessageHandlerIdentifierField = "test";
+});
+```
+
  
 ## Example - `NuiMessageHandler`
 `client.lua`
