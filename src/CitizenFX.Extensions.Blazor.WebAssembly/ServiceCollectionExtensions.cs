@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using CitizenFX.Extensions.Blazor.WebAssembly.Internal;
 using CitizenFX.Extensions.Blazor.WebAssembly.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -17,6 +18,21 @@ public static class ServiceCollectionExtensions
         Action<JsonSerializerOptions>? configureNuiJsonSerializerOptions = null)
     {
         configureNuiJsonSerializerOptions?.Invoke(NuiJsonSerializerOptions.Options);
+        
+        services.TryAddSingleton<INuiCallbackService, NuiCallbackService>();
+        
+        services.AddNuiServices(options =>
+        {
+            options.JsonSerializerOptions.MaxDepth = 0;
+            options.MessageHandlerIdentifierField = "type";
+        });
+        
+        return services;
+    }
+    
+    public static IServiceCollection AddNuiServices(this IServiceCollection services, Action<INuiBuilder> configure)
+    {
+        configure(Nui.Builder);
         
         services.TryAddSingleton<INuiCallbackService, NuiCallbackService>();
         
