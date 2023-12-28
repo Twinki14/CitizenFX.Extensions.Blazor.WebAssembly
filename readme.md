@@ -37,7 +37,7 @@ An unofficial set of extensions for developing Nui interfaces with Blazor WASM i
 builder.Services.AddNuiServices(options =>
 {
     options.JsonSerializerOptions.ConfigureForNodaTime(DateTimeZoneProviders.Tzdb);
-    options.MessageHandlerIdentifierField = "test";
+    options.MessageHandlerIdentifierField = "id";
 });
 ```
 
