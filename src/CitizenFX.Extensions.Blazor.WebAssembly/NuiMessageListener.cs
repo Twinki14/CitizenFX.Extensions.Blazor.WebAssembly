@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
+using CitizenFX.Extensions.Blazor.WebAssembly.Internal;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Rendering;
 using Microsoft.Extensions.Logging;
@@ -62,7 +63,7 @@ public partial class NuiMessageListener : ComponentBase
     {
         var methods = await NuiComponent.GetMessageHandlerMethods();
 
-        if (!eventData.RootElement.TryGetProperty(NuiMessageHandler.Identifier, out var identifierValue))
+        if (!eventData.RootElement.TryGetProperty(Nui.Options.MessageHandlerIdentifierField, out var identifierValue))
         {
             _logger!.LogDebug("Identifier not found in the received message {IdentifierValue}", identifierValue);
             return;
@@ -92,7 +93,7 @@ public partial class NuiMessageListener : ComponentBase
                 
                 if (eventData.RootElement.TryGetProperty(param.Name, out var element))
                 {
-                    var deserialized = element.Deserialize(param.ParameterType, NuiJsonSerializerOptions.Options);
+                    var deserialized = element.Deserialize(param.ParameterType, Nui.Options.JsonSerializerOptions);
                     if (deserialized is not null)
                     {
                         methodValues.Add(deserialized);

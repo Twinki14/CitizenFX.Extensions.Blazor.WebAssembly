@@ -65,7 +65,7 @@ public class NuiComponent : ComponentBase
                 .Select(m =>
                 {
                     var attribute = (NuiMessageHandler) Attribute.GetCustomAttribute(m, typeof(NuiMessageHandler))!;
-                    return new MessageHandlerMethod(m, instance, attribute.Type);
+                    return new MessageHandlerMethod(m, instance, attribute.Identifier);
                 })
                 .ToList();
 
@@ -83,7 +83,7 @@ public class NuiComponent : ComponentBase
                     .Select(method =>
                     {
                         var attribute = (NuiMessageHandler) Attribute.GetCustomAttribute(method, typeof(NuiMessageHandler))!;
-                        return new MessageHandlerMethod(method, null, attribute.Type);
+                        return new MessageHandlerMethod(method, null, attribute.Identifier);
                     }))
                 .ToList();
 

@@ -2,5 +2,5 @@
 
 internal sealed class Nui
 {
-    internal static NuiBuilder Builder = new();
+    internal static NuiBuilder Options = new();
 }
