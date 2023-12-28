@@ -1,4 +1,5 @@
 ﻿using System.Net.Http.Json;
+using CitizenFX.Extensions.Blazor.WebAssembly.Internal;
 using Microsoft.JSInterop;
 
 namespace CitizenFX.Extensions.Blazor.WebAssembly.Services;
@@ -18,7 +19,7 @@ public class NuiCallbackService(IJSRuntime jsRuntime) : INuiCallbackService
         {
             httpClient.BaseAddress = new Uri($"https://{resourceName}/");
 
-            return await httpClient.PostAsJsonAsync($"{callback}", value, NuiJsonSerializerOptions.Options, cancellationToken);   
+            return await httpClient.PostAsJsonAsync($"{callback}", value, Nui.Options.JsonSerializerOptions, cancellationToken);   
         }
     }
 

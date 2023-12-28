@@ -2,7 +2,7 @@
 
 /// <summary>
 /// Any method with this attribute will be considered when handling Nui Messages.
-/// <see cref="NuiMessageListener"/> uses this attribute to determine which method the Nui Message belongs to, using the <see cref="Identifier"/> property added in the Nui Message.
+/// <see cref="NuiMessageListener"/> uses this attribute to determine which method the Nui Message belongs to, using the <see cref="INuiBuilder.MessageHandlerIdentifierField"/> property added in the Nui Message.
 /// </summary>
 /// <example>
 /// <code>
@@ -19,10 +19,9 @@
 /// }
 /// </code>
 /// </example>
-/// <param name="type">The type or identifier of a Nui Message, typically sent with SendNuiMessage, this is used to determine which method the Nui Message should go to. For example, type = "showui:message"</param>
+/// <param name="identifier">The type or identifier of a Nui Message, typically sent with SendNuiMessage, this is used to determine which method the Nui Message should go to. For example, type = "showui:message"</param>
 [AttributeUsage(AttributeTargets.Method, Inherited = false)]
-public class NuiMessageHandler(string type) : Attribute
+public class NuiMessageHandler(string identifier) : Attribute
 {
-    public readonly string Type = type;
-    public const string Identifier = "type";
+    public readonly string Identifier = identifier;
 }
