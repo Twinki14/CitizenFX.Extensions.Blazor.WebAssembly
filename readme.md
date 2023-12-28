@@ -31,7 +31,7 @@ An unofficial set of extensions for developing Nui interfaces with Blazor WASM i
 ## Notes
 - `NuiMessageListener` & `NuiMessageHandler` requires/uses a specific string field in the sending-message to determine which method to invoke
   - The field can be configured in `builder.Services.AddNuiServices();`
-  - When `NuiMessageListener` receives an Nui message, `NuiMessageListener` will look for all `NuiMessageHandler` attributed methods constructed with the matching `identifier` name found in the received Nui message, and then attempt to deserialize any json fields specified in the `NuiMessageHandler` attributed method parameters
+  - When `NuiMessageListener` receives an Nui message, it checks for `[NuiMessageHandler]` attributed methods with a matching identifier name in the received message
 - Currently, you may only have one `NuiMessageListener` per identifier-string
 - Configure the internal `JsonSerializerOptions` and the identifier-string in `builder.Services.AddNuiServices();`
 ```csharp
