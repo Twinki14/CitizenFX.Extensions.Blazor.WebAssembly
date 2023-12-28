@@ -11,22 +11,16 @@ An unofficial set of extensions for developing Nui interfaces with Blazor WASM i
 ## Features
 - Attribute-based Nui Message handling
   - `[NuiMessageHandler("showui:true")]`
-
-
 - Service-based Nui Callback triggering
   - `@inject INuiCallbackService`
   - `await NuiCallbackService.TriggerNuiCallbackAsync("getItemInfo", new { item = "phone" });`
-
-
 - `System.Text.Json` for JSON Serialization & Deserialization
 
 ## Getting started
 - For Nui Message handling, the [NuiMessageListener](src/CitizenFX.Extensions.Blazor.WebAssembly/NuiMessageListener.cs) must be injected as a root-component in index.html, and your component(s) must inherit [NuiComponent](src/CitizenFX.Extensions.Blazor.WebAssembly/NuiComponent.cs)
   - Add `<template id="nui-message-listener"></template>` to your `index.html` in the `<body>`
   - Add `builder.RootComponents.Add<NuiMessageListener>("#nui-message-listener");` in your `Program.cs`
-    - This adds some Javascript to your `<body>` that directs any Nui Messages for the resource to `NuiMessageListener`
   - Add `@inherits NuiComponent` in your component/razor page
-    - This is required for `NuiMessageListener` to `NuiMessageHandler`'s
   - Add `[NuiMessageHandler("<identifier>")]` to any static or instanced method in your component
 
 
@@ -37,7 +31,7 @@ An unofficial set of extensions for developing Nui interfaces with Blazor WASM i
 ## Notes
 - `NuiMessageListener` & `NuiMessageHandler` requires/uses a specific string field in the sending-message to determine which method to invoke
   - The field can be configured in `builder.Services.AddNuiServices();`
-  - When `NuiMessageListener` receives an Nui message, `NuiMessageListener` will look for all `NuiMessageHandler` attributed methods constructed with the matching `identifier` name found in the received Nui message, and then attempt to deserialize any json fields specified in the `NuiMessageHandler` attributed method paramters
+  - When `NuiMessageListener` receives an Nui message, `NuiMessageListener` will look for all `NuiMessageHandler` attributed methods constructed with the matching `identifier` name found in the received Nui message, and then attempt to deserialize any json fields specified in the `NuiMessageHandler` attributed method parameters
 - Currently, you may only have one `NuiMessageListener` per identifier-string
 - Configure the internal `JsonSerializerOptions` and the identifier-string in `builder.Services.AddNuiServices();`
 ```csharp
@@ -47,7 +41,6 @@ builder.Services.AddNuiServices(options =>
     options.MessageHandlerIdentifierField = "id";
 });
 ```
-
  
 ## Example - `NuiMessageHandler`
 `client.lua`
