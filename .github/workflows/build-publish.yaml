@@ -67,5 +67,5 @@ jobs:
       run: dotnet nuget push **/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }} --skip-duplicate
 
     - name: Publish - GitHub
-      if: ${{ env.is-default-branch == 'true' || env.is-tag == 'true' || (env.is-manual == 'true' && inputs.publish == 'true') }}
+      if: ${{ env.is-default-branch == 'true' || env.is-tag == 'true' || (env.is-manual == 'true' && inputs.publish == true) }}
       run: dotnet nuget push **/*.nupkg --skip-duplicate
