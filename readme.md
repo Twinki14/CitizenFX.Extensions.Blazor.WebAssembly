@@ -1,12 +1,12 @@
 # CitizenFX.Extensions.Blazor.WebAssembly
-An unofficial set of extensions for developing Nui interfaces with Blazor WASM in .NET 8
-
 [![GitHub License](https://img.shields.io/github/license/Twinki14/CitizenFX.Extensions.Blazor.WebAssembly?style=flat-square)](https://github.com/Twinki14/CitizenFX.Extensions.Blazor.WebAssembly/blob/main/LICENSE)
 [![Downloads](https://img.shields.io/nuget/dt/CitizenFX.Extensions.Blazor.WebAssembly?style=flat-square)](https://www.nuget.org/packages/CitizenFX.Extensions.Blazor.WebAssembly)
 [![GitHub release](https://img.shields.io/github/v/release/Twinki14/CitizenFX.Extensions.Blazor.WebAssembly?style=flat-square)](https://github.com/Twinki14/CitizenFX.Extensions.Blazor.WebAssembly/releases)
 [![Nuget](https://img.shields.io/nuget/v/CitizenFX.Extensions.Blazor.WebAssembly?style=flat-square)](https://www.nuget.org/packages/CitizenFX.Extensions.Blazor.WebAssembly)
 [![cfx.re](https://img.shields.io/badge/cfx.re-link-orange)](https://forum.cfx.re/t/c-cfx-extensions-blazor-webassembly/5196202)
 [![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/Twinki14/CitizenFX.Extensions.Blazor.WebAssembly/build-publish.yaml?style=flat-square)](https://github.com/Twinki14/CitizenFX.Extensions.Blazor.WebAssembly/actions/workflows/build-publish.yaml)
+
+An unofficial set of extensions for developing Nui interfaces with Blazor WASM in .NET 8
 
 ## Features
 - Attribute-based Nui Message handling
